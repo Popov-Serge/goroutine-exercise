@@ -8,28 +8,62 @@ import (
 )
 
 func TestGenerateRandomElements(t *testing.T) {
-	size := 3
-	arr := generateRandomElements(size)
-	assert.Equal(t, size, len(arr))
-}
+	tests := []struct {
+		name string
+		size int
+		want int
+	}{
+		{
+			name: "positive size",
+			size: 3,
+			want: 3,
+		},
+		{
+			name: "zero size",
+			size: 0,
+			want: 0,
+		},
+		{
+			name: "negative size",
+			size: -1,
+			want: 0,
+		},
+	}
 
-func TestZeroSizeOnGenerateRandomElements(t *testing.T) {
-	size := 0
-	arr := generateRandomElements(size)
-	assert.Equal(t, size, len(arr))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			arr := generateRandomElements(tt.size)
+			assert.Equal(t, tt.want, len(arr))
+		})
+	}
 }
 
 func TestMaximum(t *testing.T) {
-	arr := []int{1, 2, 3, 4, 5, 6, 7}
-	assert.Equal(t, 7, maximum(arr))
-}
+	tests := []struct {
+		name string
+		data []int
+		want int
+	}{
+		{
+			name: "normal",
+			data: []int{1, 2, 3, 4, 5, 6, 7},
+			want: 7,
+		},
+		{
+			name: "empty",
+			data: []int{},
+			want: 0,
+		},
+		{
+			name: "one element",
+			data: []int{1},
+			want: 1,
+		},
+	}
 
-func TestMaximumEmptyArr(t *testing.T) {
-	var arr []int
-	assert.Equal(t, 0, maximum(arr))
-}
-
-func TestMaximumOneElement(t *testing.T) {
-	arr := []int{1}
-	assert.Equal(t, 1, maximum(arr))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, maximum(tt.data))
+		})
+	}
 }
